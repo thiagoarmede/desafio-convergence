@@ -1,0 +1,132 @@
+/*****************************************
+** Folha de estilo principal do projeto **
+*** Autor: Thiago Armede               *** 
+*****************************************/
+
+body{
+    padding-top: 20px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/*
+    Navbar do projeto
+*/
+
+#nav{
+    background-color: rgb(91, 1, 133);
+    padding: 15px 15px;
+    margin-bottom: 100px;
+    color: white;
+}
+
+/*
+    Botão principal
+*/
+
+#grupo-btn{
+    padding-left: 60px; 
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+#btn-cidade{
+    background:  rgb(91, 1, 133);
+    width: 220px;    
+    border-color:white;
+    transition: border-color 0.4s;
+}
+
+#btn-cidade:hover{
+    border-color:  rgb(62, 1, 90);
+}
+
+/*
+    Elementos do widget que mostra a temperatura.
+*/
+
+#elements-row{
+    padding-top: 40px;
+    height: 520px;
+}
+
+.elements{
+    background-color: rgba(0, 0, 0, 0.603);
+}
+
+.elements > h5, .elements > h3{
+    color: white;
+    text-align: center; 
+}
+
+.elements > h3{
+    padding-top: 10px;  
+}
+
+.weather{
+    display: flex;
+    flex-flow: column wrap;
+    box-shadow: 0px 1px 10px 0px #cfcfcf;
+    overflow: hidden;
+}
+
+.weather .current{
+    display: flex;
+    flex-flow: row wrap;
+    background: url("../images/salvador.JPG");
+    background-repeat: repeat-x;
+    color: white;
+    padding: 20px;
+    text-shadow: 1px 1px rgb(91, 1, 133);
+}
+
+.weather .current .info {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    flex-grow: 2;
+}
+
+.weather .current .info .city {
+    font-size: 26px;
+}
+
+.weather .current .info .temp {
+    font-size: 56px;
+}
+
+.weather .current .info .wind {
+    font-size: 24px;
+}
+
+.weather .current .icon {
+    text-align: center;
+    font-size: 64px;
+    flex-grow: 1;
+}
+
+.weather .future {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.weather .future .day {
+    padding-top: 5px;
+    flex-grow: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    transition: background-color 0.4s;
+}
+
+.weather .future .day:hover {
+    color: #fff;
+    background-color: rgb(91, 1, 133);
+}
+
+.weather .future .day h3 {
+    text-transform: uppercase;
+}
+
+.weather .future .day p {
+    font-size: 28px;
+}

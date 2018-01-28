@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Desafio Front-end - Convergence Works</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- CSS do Font Awesome -->        
+        <link rel="stylesheet" type="text/css" href="./font/font-awesome/css/font-awesome.min.css" />
+
+        <!-- CSS do Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+        <!-- CSS do Weather Icons -->        
+        <link rel="stylesheet" href="./css/weather-icons.min.css">
+        <link rel="stylesheet" href="./css/weather-icons-wind.min.css">
+
+        <!-- CSS do elemento do desafio. -->
+        <link rel="stylesheet" href="./css/style.css">
+
+    </head>
+
+    <body>
+
+
+        <nav class="navbar navbar-expand-sm fixed-top" id="nav">
+            <h1>Convergence Works
+                <small>Desafio Front-end</small>
+            </h1>
+        </nav>
+
+        <br><br>
+        <!-- Elemento do desafio - INICIO -->
+        <div class="container">
+            <div class="row" id="elements-row">
+                <div class="col-md-4 offset-md-4 elements">
+                    <h3>Previsão do tempo!</h3>
+                    <h5>Escolha a cidade: </h5>
+                    <div class="btn-group" id="grupo-btn" style="">
+                        <button id="btn-cidade" class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Salvador
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" onclick="refresh(this.innerHTML);" href="#">Salvador</a>
+                            <a class="dropdown-item" onclick="refresh(this.innerHTML);" href="#">São Paulo</a>
+                            <a class="dropdown-item" onclick="refresh(this.innerHTML);" href="#">Rio de Janeiro</a>
+                        </div>
+                    </div>
+
+                    <div class="weather">
+                        <div class="current">
+                            <div class="info">
+                                <div>&nbsp;</div>
+                                <div class="city" id="cidade">
+                                    Salvador
+                                </div>
+                                <div class="temp" id="temp1">
+                                    32&deg;<small>C</small>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <span id="icone-temp" class="wi wi-day-sunny"></span>
+                            </div>
+                        </div>
+                        <div class="future">
+                            <div class="day">
+                                <h3><strong>Seg</strong></h3>
+                                <p>
+                                    <h3 id="temp2">32&deg;<small>C</small></h3>
+                                </p>
+                            </div>
+                            <div class="day">
+                                <h3><strong>Ter</strong></h3>
+                                <p>
+                                    <h3 id="temp3">30&deg;<small>C</small></h3>
+                                </p>
+                            </div>
+                            <div class="day">
+                                <h3><strong>Qua</strong></h3>
+                                <p>
+                                    <h3 id="temp4">30&deg;<small>C</small></h3>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desafio - FIM -->
+
+
+        <!--Javascript codificado-->
+        <script src="./js/main.js"></script>
+
+        <!-- JQuery e Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    </body>
+</html>
