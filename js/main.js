@@ -4,7 +4,6 @@
 */
 
 //função que atualiza o elemento a cada vez que a cidade muda.
-
 refresh = (cidade) => {
     if(cidade == 'Salvador'){
         var dados_cidade = {
@@ -31,9 +30,7 @@ refresh = (cidade) => {
             temp4: 33
         };
     }
-    
     update_template(dados_cidade);
-    console.log(cidade);
 };
 
 //função responsável por atualizar os elementos do DOM.

@@ -130,3 +130,28 @@ body{
 .weather .future .day p {
     font-size: 28px;
 }
+
+/*
+    Rodapé da página
+*/
+
+#rodape{
+    height: 50px;
+    width: 100%;
+    background: rgb(91, 1, 133);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+}
+
+footer a{
+    color: rgb(131, 200, 240);
+    transition: color 0.4s;
+}
+
+footer a:hover{
+    text-decoration: none;
+    color: rgb(34, 111, 199)
+}
