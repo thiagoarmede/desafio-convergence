@@ -96,9 +96,9 @@ update_template = (dados_cidade) => {
     //Buscando elementos que mudarão os dias
     elementosArray = Array.from(document.querySelectorAll('.day-ui'));
     //preenchendo conteúdo desses elementos com os dias corretos.
-    elementosArray[0].textContent = diasPosteriores[0];
-    elementosArray[1].textContent = diasPosteriores[1];
-    elementosArray[2].textContent = diasPosteriores[2];
+    elementosArray[0].firstChild.textContent = diasPosteriores[0];
+    elementosArray[1].firstChild.textContent = diasPosteriores[1];
+    elementosArray[2].firstChild.textContent = diasPosteriores[2];
 };  
 
 //Calcula os dias posteriores baseando-se no dia atual.
