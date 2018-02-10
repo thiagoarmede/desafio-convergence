@@ -1,40 +1,38 @@
 /*
     Arquivo principal que engloba os eventos e funções do desafio.
     Autor: Thiago Armede
-*/
+    Preenche dinamicamente as temperaturas com uso da API Apixu.
 
+*/
 //função que atualiza o elemento a cada vez que a cidade muda.
 refresh = (cidade) => {
-    if(cidade == 'Salvador'){
-        var dados_cidade = {
-            nome : 'Salvador',
-            temp1 : 32,
-            temp2 : 30,
-            temp3 : 28,
-            temp4 : 31
-        };
-    }else if (cidade == 'São Paulo'){
-        var dados_cidade = {
-            nome: 'São Paulo',
-            temp1: 22,
-            temp2: 25,
-            temp3: 19,
-            temp4: 21
-        };
-    }else if (cidade == 'Rio de Janeiro') {
-        var dados_cidade = {
-            nome: 'Rio de Janeiro',
-            temp1: 34,
-            temp2: 32,
-            temp3: 29,
-            temp4: 33
-        };
+    let dados;
+    let request = new XMLHttpRequest();
+    let dados_cidade;
+
+    request.open('POST', `https://api.apixu.com/v1/forecast.json?key=4d38e52a8a2d445f943231135180902&q=${cidade.trim()}&days=4&lang=pt`, true);
+
+    request.onload = function(){
+        if(request.status >= 200 && request.status < 400){
+            dados = JSON.parse(request.responseText);
+            dados_cidade = {
+                nome: cidade,
+                temp1: dados.current.temp_c,
+                temp2: dados.forecast.forecastday[1].day.avgtemp_c,
+                temp3: dados.forecast.forecastday[2].day.avgtemp_c,
+                temp4: dados.forecast.forecastday[3].day.avgtemp_c
+            };
+
+            update_template(dados_cidade);
+        }else{
+            alert('Impossivel recuperar dados da API.');
+        }
     }
-    update_template(dados_cidade);
+
+    request.send(); 
 };
 
 //função responsável por atualizar os elementos do DOM.
-
 update_template = (dados_cidade) => {
     //Atribuindo elementos do DOM a serem atualizados.
     var botaoCidade = document.getElementById('btn-cidade');
@@ -66,18 +64,47 @@ update_template = (dados_cidade) => {
         iconeTemperatura.classList.add('wi-day-cloudy');
     }
 
+    Data = new Date();
     //mudando imagem do fundo do widget
     var displayTemperatura = document.querySelector('.weather .current');   
+    var hora = Data.getHours();
 
-    if(dados_cidade.nome == "Rio de Janeiro"){
-        displayTemperatura.style.background = "url('./images/rj.jpg') repeat-x"; 
-    } else if (dados_cidade.nome == "Salvador"){
-        displayTemperatura.style.background = "url('./images/salvador.JPG') repeat-x"; 
-    } else if (dados_cidade.nome == "São Paulo"){
-        displayTemperatura.style.background = "url('./images/sp.jpg') repeat-x"; 
+    if(hora >= 19){
+        if (dados_cidade.nome == "Rio de Janeiro") {
+            displayTemperatura.style.background = "url('./images/rj-noite.jpg') repeat-x";
+        } else if (dados_cidade.nome == "Salvador") {
+            displayTemperatura.style.background = "url('./images/salvador-noite.jpg') repeat-x";
+        } else if (dados_cidade.nome == "São Paulo") {
+            displayTemperatura.style.background = "url('./images/sp-noite.jpg') repeat-x";
+        }
+    }else{
+        if (dados_cidade.nome == "Rio de Janeiro") {
+            displayTemperatura.style.background = "url('./images/rj-dia.jpg') repeat-x";
+        } else if (dados_cidade.nome == "Salvador") {
+            displayTemperatura.style.background = "url('./images/salvador-dia.JPG') repeat-x";
+        } else if (dados_cidade.nome == "São Paulo") {
+            displayTemperatura.style.background = "url('./images/sp-dia.jpg') repeat-x";
+        }
     }
-
-    
+    //Recebendo dias posteriores para preencher UI.
+    diasPosteriores = retornaDias(Data.getDay());
+    //Buscando elementos que mudarão os dias
+    elementosArray = Array.from(document.querySelectorAll('.day-ui'));
+    //preenchendo conteúdo desses elementos com os dias corretos.
+    elementosArray[0].textContent = diasPosteriores[0];
+    elementosArray[1].textContent = diasPosteriores[1];
+    elementosArray[2].textContent = diasPosteriores[2];
 };  
 
+//Calcula os dias posteriores baseando-se no dia atual.
+retornaDias = (dia) => {
+    let diasSiglas = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
+    let diasRetorno = [];
+
+    diasRetorno.push(diasSiglas[(dia + 1) % 7]);
+    diasRetorno.push(diasSiglas[(dia + 2) % 7]);
+    diasRetorno.push(diasSiglas[(dia + 3) % 7]);
+
+    return diasRetorno;
+};
 //FIM
