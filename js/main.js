@@ -1,15 +1,20 @@
 /*
     Arquivo principal que engloba os eventos e funções do desafio.
     Autor: Thiago Armede
-    Preenche dinamicamente as temperaturas com uso da API Apixu.
-
+    
+    -Preenche dinamicamente as temperaturas com uso da API Apixu.
+    -Muda os dias mostrados se baseando no dia atual.
+    -Muda as imagens de fundo baseando-se no horario atual para dia ou noite.
 */
+
+
 //função que atualiza o elemento a cada vez que a cidade muda.
 refresh = (cidade) => {
     let dados;
     let request = new XMLHttpRequest();
     let dados_cidade;
-
+    
+    //requisitando os dados da API recebendo a cidade da interface.
     request.open('POST', `https://api.apixu.com/v1/forecast.json?key=4d38e52a8a2d445f943231135180902&q=${cidade.trim()}&days=4&lang=pt`, true);
 
     request.onload = function(){
