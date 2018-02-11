@@ -15,7 +15,7 @@ refresh = (cidade) => {
     let dados_cidade;
     
     //requisitando os dados da API recebendo a cidade da interface.
-    request.open('POST', `https://api.apixu.com/v1/forecast.json?key=4d38e52a8a2d445f943231135180902&q=${cidade.trim()}&days=4&lang=pt`, true);
+    request.open('POST', `https://api.apixu.com/v1/forecast.json?key=4d38e52a8a2d445f943231135180902&q=${cidade.trim()}&days=4`, true);
 
     request.onload = function(){
         if(request.status >= 200 && request.status < 400){
@@ -25,9 +25,11 @@ refresh = (cidade) => {
                 temp1: dados.current.temp_c,
                 temp2: dados.forecast.forecastday[1].day.avgtemp_c,
                 temp3: dados.forecast.forecastday[2].day.avgtemp_c,
-                temp4: dados.forecast.forecastday[3].day.avgtemp_c
+                temp4: dados.forecast.forecastday[3].day.avgtemp_c,
+                condicao: dados.current.condition.text,
+                icone: dados.current.condition.icon
             };
-
+            //Chama função principal que muda o template baseado na resposta da API.
             update_template(dados_cidade);
         }else{
             alert('Impossivel recuperar dados da API.');
@@ -59,38 +61,14 @@ update_template = (dados_cidade) => {
 
     //mudança do icone da temperatura de acordo com os dados recebidos.
     var iconeTemperatura = document.getElementById('icone-temp');
+    iconeTemperatura.setAttribute('src', `http:${dados_cidade.icone}`);
 
-    //mudando a classe da div pra ocorrer a mudança de icone.
-    if(dados_cidade.temp1 >= 30 && !iconeTemperatura.classList.contains('wi-day-sunny')){
-        iconeTemperatura.classList.remove('wi-day-cloudy');
-        iconeTemperatura.classList.add('wi-day-sunny');
-    }else if(dados_cidade.temp1 >= 20 && !iconeTemperatura.classList.contains('wi-day-cloudly')){
-        iconeTemperatura.classList.remove('wi-day-sunny');
-        iconeTemperatura.classList.add('wi-day-cloudy');
-    }
-
-    Data = new Date();
     //mudando imagem do fundo do widget
-    var displayTemperatura = document.querySelector('.weather .current');   
+    Data = new Date();
+    var displayImagemFundo = document.querySelector('.weather .current');   
     var hora = Data.getHours();
+    fotos_temperatura(displayImagemFundo, hora, dados_cidade);
 
-    if(hora >= 19){
-        if (dados_cidade.nome == "Rio de Janeiro") {
-            displayTemperatura.style.background = "url('./images/rj-noite.jpg') repeat-x";
-        } else if (dados_cidade.nome == "Salvador") {
-            displayTemperatura.style.background = "url('./images/salvador-noite.jpg') repeat-x";
-        } else if (dados_cidade.nome == "São Paulo") {
-            displayTemperatura.style.background = "url('./images/sp-noite.jpg') repeat-x";
-        }
-    }else{
-        if (dados_cidade.nome == "Rio de Janeiro") {
-            displayTemperatura.style.background = "url('./images/rj-dia.jpg') repeat-x";
-        } else if (dados_cidade.nome == "Salvador") {
-            displayTemperatura.style.background = "url('./images/salvador-dia.JPG') repeat-x";
-        } else if (dados_cidade.nome == "São Paulo") {
-            displayTemperatura.style.background = "url('./images/sp-dia.jpg') repeat-x";
-        }
-    }
     //Recebendo dias posteriores para preencher UI.
     diasPosteriores = retornaDias(Data.getDay());
     //Buscando elementos que mudarão os dias
@@ -100,6 +78,32 @@ update_template = (dados_cidade) => {
     elementosArray[1].firstChild.textContent = diasPosteriores[1];
     elementosArray[2].firstChild.textContent = diasPosteriores[2];
 };  
+
+/*
+                Funções Auxiliares
+    (uso delas nas funções principais acima.)
+*/
+
+//Troca a imagem de fundo do widget baseando-se na hora local.
+fotos_temperatura = (display, hora, dados_cidade) => {
+    if (hora >= 19 || hora <= 4) {
+        if (dados_cidade.nome == "Rio de Janeiro") {
+            display.style.background = "url('./images/rj-noite.jpg') repeat-x";
+        } else if (dados_cidade.nome == "Salvador") {
+            display.style.background = "url('./images/salvador-noite.jpg') repeat-x";
+        } else if (dados_cidade.nome == "São Paulo") {
+            display.style.background = "url('./images/sp-noite.jpg') repeat-x";
+        }
+    } else {
+        if (dados_cidade.nome == "Rio de Janeiro") {
+            display.style.background = "url('./images/rj-dia.jpg') repeat-x";
+        } else if (dados_cidade.nome == "Salvador") {
+            display.style.background = "url('./images/salvador-dia.JPG') repeat-x";
+        } else if (dados_cidade.nome == "São Paulo") {
+            display.style.background = "url('./images/sp-dia.jpg') repeat-x";
+        }
+    }
+}
 
 //Calcula os dias posteriores baseando-se no dia atual.
 retornaDias = (dia) => {
@@ -112,4 +116,3 @@ retornaDias = (dia) => {
 
     return diasRetorno;
 };
-//FIM
